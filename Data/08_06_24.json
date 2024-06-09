@@ -1,0 +1,39 @@
+[
+    {
+        "time": 0,
+        "temperature": 22.5,
+        "moisture1": 45,
+        "moisture2": 47
+    },
+    {
+        "time": 12.5,
+        "temperature": 22.7,
+        "moisture1": 44,
+        "moisture2": 46
+    },
+    {
+        "time": 12.75,
+        "temperature": 22.6,
+        "moisture1": 43,
+        "moisture2": 45
+    },
+    {
+        "time": 13,
+        "temperature": 28,
+        "moisture1": 70,
+        "moisture2": 80
+    },
+    {
+        "time": 15,
+        "temperature": 16,
+        "moisture1": 80,
+        "moisture2": 20
+    },
+    {
+        "time": 24,
+        "temperature": 17,
+        "moisture1": 30,
+        "moisture2": 60
+    }
+    
+]

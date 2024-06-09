@@ -1,0 +1,27 @@
+        // Function to update the charts with new data
+        // async function updateCharts(charts, oldData) {
+        //     const newData = await fetchData();
+        //     if (newData.length > oldData.length) {
+        //         const newEntries = newData.slice(oldData.length);
+        //         newEntries.forEach(entry => {
+        //             const newLabel = new Date(entry.timestamp).toLocaleTimeString();
+        //             const newTemperature = entry.temperature;
+        //             const newMoisture1 = entry.moisture1;
+        //             const newMoisture2 = entry.moisture2;
+
+        //             // Update temperature chart
+        //             charts.tempChart.data.labels.push(newLabel);
+        //             charts.tempChart.data.datasets[0].data.push(newTemperature);
+        //             charts.tempChart.update();
+
+        //             // Update moisture sensor 1 chart
+        //             charts.moistChart.data.labels.push(newLabel);
+        //             charts.moistChart.data.datasets[0].data.push(newMoisture1);
+        //             charts.moistChart.data.datasets[1].data.push(newMoisture2);
+        //             charts.moistChart.update();
+
+        //         });
+
+        //         // Update old data
+        //         oldData.push(...newEntries);
+        //     }

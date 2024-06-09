@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Sensor Readings</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Vertical Tower</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <body style="background-color: white;"></body>
+
+</head>
+<body>
+    <h1>ESP32 Sensor Readings</h1>
+    <label for="dataDropdown">Select Day:</label>
+    <select id="dataDropdown" onchange="loadData()">
+        <option value="">Select...</option>
+    </select>
+
+    <canvas id="TempChart" width="800" height="400"></canvas>
+    <canvas id="MoistChart" width="800" height="400"></canvas>
+    
+    <script>
+
+        const datafileName = "/Data/08_06_24.json"
+
+        // Function to fetch data from JSON file
+        async function fetchData() {
+            const response = await fetch(datafileName);
+            const json = await response.json();
+            return json;
+        }
+
+        // Function to initialize the chart
+        async function initCharts() {
+            const data = await fetchData();
+
+
+            const times = data.map(entry => entry.time);
+            const temperatures = data.map(entry => entry.temperature);
+            const moisture1 = data.map(entry => entry.moisture1);
+            const moisture2 = data.map(entry => entry.moisture2);
+        
+            const xTicks = [];
+            const xValues = [];
+            for (let i = 0; i < 24; i++) {
+                xTicks.push(`${i}:00`);
+                xValues.push(i);
+            }  
+
+            console.log(temperatures);
+            console.log(times);
+            const canvasTemp = document.getElementById('TempChart');
+            const ctxTemp = canvasTemp.getContext('2d');
+            const canvasMoist = document.getElementById('MoistChart');
+            const ctxMoist = canvasMoist.getContext('2d');
+
+            const TempChart = new Chart(ctxTemp,{
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Temperature Sensor',
+                        data: times.map((x, i) => ({ x, y: temperatures[i] })),
+                        borderColor: 'red', // Set line color to red
+                        borderWidth: 2, // Set line width to 4 pixels
+                        backgroundColor: 'red',
+                        pointRadius: 2,
+                        showLine:true,
+                        lineTension:0,
+                        
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            ticks: {
+                                stepSize: 1,
+                                min: 0,
+                                max: 24,
+                                beginAtZero: true,
+                                callback: function(value) {
+                                    return value;
+                                }, 
+                            },
+                            scaleLabel: {
+                            display: true,
+                            labelString: 'Time'
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            position: 'left',
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Temperature (˚C)'
+                            }
+                        }
+
+                    }
+                }
+                });
+            
+
+            const MoistChart = new Chart(ctxMoist,{
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Moisture Sensor 1',
+                        data: times.map((x, i) => ({ x, y: moisture1[i] })),
+                        borderColor: 'blue', // Set line color to red
+                        borderWidth: 2, // Set line width to 4 pixels
+                        backgroundColor: 'blue',
+                        pointRadius: 2,
+                        showLine:true,
+                        lineTension:0,
+                        
+                    },
+                    {
+                        label: 'Moisture Sensor 2',
+                        data: times.map((x, i) => ({ x, y: moisture2[i] })),
+                        borderColor: 'green', // Set line color to red
+                        borderWidth: 2, // Set line width to 4 pixels
+                        backgroundColor: 'green',
+                        pointRadius: 2,
+                        showLine:true,
+                        lineTension:0,
+                        
+                    },
+                    
+                ]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            ticks: {
+                                stepSize: 1,
+                                min: 0,
+                                max: 24,
+                                beginAtZero: true,
+                                callback: function(value) {
+                                    return value;
+                                }
+                                
+                            },
+                            scaleLabel: {
+                            display: true,
+                            labelString: 'Time'
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            position: 'left',
+                            scaleLabel: {
+                            display: true,
+                            labelString: 'Moisture (%)'
+                            }
+                        }
+
+                    }
+                }
+                });
+            
+            }
+            
+        window.onload = async () => {
+            
+            await initCharts();
+
+        };
+
+
+    </script>
+</body>
+</html>

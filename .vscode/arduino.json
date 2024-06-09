@@ -1,0 +1,8 @@
+{
+    "configuration": "cpu=atmega328",
+    "board": "arduino:avr:nano",
+    "port": "/dev/tty.usbserial-1410",
+    "programmer": "arduinoasisp",
+    "sketch": "script_1.ino",
+    "output": "/Users/samallsopp/Documents/Jacks Shit/Output"
+}
